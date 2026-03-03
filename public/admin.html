@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Поле чудес — Ведущий</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- Error screen -->
+  <div id="error-screen" class="screen screen-center hidden">
+    <div class="error-icon">⚠️</div>
+    <h2 id="error-msg">Комната не найдена</h2>
+    <p class="muted">Проверьте ссылку или создайте новую игру</p>
+    <a href="/" class="btn-outline">На главную</a>
+  </div>
+
+  <!-- Lobby screen -->
+  <div id="screen-lobby" class="screen screen-center">
+    <div class="lobby-icon">🎡</div>
+    <h1>Поле чудес</h1>
+    <p class="room-code" id="room-code-label"></p>
+    <p class="muted">Откройте ТВ экран и раздайте QR для игроков</p>
+    <button id="start-btn" class="btn-primary btn-large">Начать игру</button>
+  </div>
+
+  <!-- Waiting for spin -->
+  <div id="screen-waiting" class="screen screen-center hidden">
+    <div class="turn-badge">
+      <span class="badge-icon">🎯</span>
+      <p class="badge-label">Сейчас ходит</p>
+      <p id="waiting-player-name" class="badge-name">—</p>
+    </div>
+    <div class="round-badge" id="waiting-round-badge"></div>
+    <p class="muted">Передайте телефон игроку</p>
+    <div id="skip-notice" class="skip-notice hidden"></div>
+  </div>
+
+  <!-- Player turn (after found letter — can spin again or guess) -->
+  <div id="screen-player-turn" class="screen screen-center hidden">
+    <div class="turn-badge">
+      <span class="badge-icon">✅</span>
+      <p class="badge-label">Буква найдена!</p>
+      <p id="turn-player-name" class="badge-name">—</p>
+    </div>
+    <p class="muted">Игрок может крутить снова или назвать слово</p>
+    <p class="hint-small">Телефон у игрока</p>
+  </div>
+
+  <!-- Enter letter screen -->
+  <div id="screen-letter" class="screen hidden">
+    <div class="screen-header">
+      <p class="screen-title">Введите букву</p>
+      <p class="screen-hint" id="letter-hint">Игрок называет букву</p>
+    </div>
+
+    <div id="sector-result" class="sector-badge hidden"></div>
+
+    <div class="keyboard">
+      <div class="kb-row">
+        <button class="kb-key" data-letter="Й">Й</button>
+        <button class="kb-key" data-letter="Ц">Ц</button>
+        <button class="kb-key" data-letter="У">У</button>
+        <button class="kb-key" data-letter="К">К</button>
+        <button class="kb-key" data-letter="Е">Е</button>
+        <button class="kb-key" data-letter="Н">Н</button>
+        <button class="kb-key" data-letter="Г">Г</button>
+        <button class="kb-key" data-letter="Ш">Ш</button>
+        <button class="kb-key" data-letter="Щ">Щ</button>
+        <button class="kb-key" data-letter="З">З</button>
+        <button class="kb-key" data-letter="Х">Х</button>
+        <button class="kb-key" data-letter="Ъ">Ъ</button>
+      </div>
+      <div class="kb-row">
+        <button class="kb-key" data-letter="Ф">Ф</button>
+        <button class="kb-key" data-letter="Ы">Ы</button>
+        <button class="kb-key" data-letter="В">В</button>
+        <button class="kb-key" data-letter="А">А</button>
+        <button class="kb-key" data-letter="П">П</button>
+        <button class="kb-key" data-letter="Р">Р</button>
+        <button class="kb-key" data-letter="О">О</button>
+        <button class="kb-key" data-letter="Л">Л</button>
+        <button class="kb-key" data-letter="Д">Д</button>
+        <button class="kb-key" data-letter="Ж">Ж</button>
+        <button class="kb-key" data-letter="Э">Э</button>
+        <button class="kb-key" data-letter="Ё">Ё</button>
+      </div>
+      <div class="kb-row">
+        <button class="kb-key" data-letter="Я">Я</button>
+        <button class="kb-key" data-letter="Ч">Ч</button>
+        <button class="kb-key" data-letter="С">С</button>
+        <button class="kb-key" data-letter="М">М</button>
+        <button class="kb-key" data-letter="И">И</button>
+        <button class="kb-key" data-letter="Т">Т</button>
+        <button class="kb-key" data-letter="Ь">Ь</button>
+        <button class="kb-key" data-letter="Б">Б</button>
+        <button class="kb-key" data-letter="Ю">Ю</button>
+      </div>
+    </div>
+
+    <div id="used-letters-section" class="used-section">
+      <p class="used-label">Уже называли:</p>
+      <div id="used-letters-display" class="used-chips"></div>
+    </div>
+
+    <button id="pass-turn-btn" class="btn-outline btn-pass">Передать ход →</button>
+  </div>
+
+  <!-- Word guess screen -->
+  <div id="screen-guess" class="screen screen-center hidden">
+    <div class="guess-badge">
+      <p class="guess-icon">🤔</p>
+      <p class="guess-label">Игрок называет слово</p>
+      <p id="guess-word-display" class="guess-word"></p>
+    </div>
+    <div class="guess-actions">
+      <button id="accept-btn" class="btn-success btn-large">✓ Верно!</button>
+      <button id="reject-btn" class="btn-danger btn-large">✗ Неверно</button>
+    </div>
+  </div>
+
+  <!-- Bankrupt screen -->
+  <div id="screen-bankrupt" class="screen screen-center hidden">
+    <div class="bankrupt-banner">
+      <p class="bankrupt-icon">💸</p>
+      <h2>Банкрот!</h2>
+      <p id="bankrupt-player-name" class="bankrupt-player"></p>
+    </div>
+    <div class="bankrupt-task-box">
+      <p class="task-label">Задание:</p>
+      <p id="bankrupt-task" class="bankrupt-task"></p>
+    </div>
+    <button id="bankrupt-done-btn" class="btn-primary btn-large">Задание выполнено ✓</button>
+  </div>
+
+  <!-- Round end screen -->
+  <div id="screen-round-end" class="screen hidden">
+    <div class="screen-header">
+      <p class="screen-title" id="round-end-title">Раунд завершён!</p>
+    </div>
+    <div id="round-end-scores" class="round-scores"></div>
+    <div id="next-btn-area">
+      <button id="next-round-btn" class="btn-primary btn-large">Следующий раунд →</button>
+    </div>
+  </div>
+
+  <!-- Game end screen -->
+  <div id="screen-game-end" class="screen hidden">
+    <div class="screen-header">
+      <p class="screen-title">🏆 Игра завершена!</p>
+    </div>
+    <div id="game-end-scores" class="round-scores"></div>
+    <a href="/" class="btn-outline btn-large" style="display:block;text-align:center;margin-top:16px;">
+      Создать новую игру
+    </a>
+  </div>
+
+  <!-- Toast -->
+  <div id="admin-toast" class="admin-toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

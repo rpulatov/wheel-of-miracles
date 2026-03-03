@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поле чудес — Создать игру</title>
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-wheel">🎡</div>
+      <h1>Поле чудес</h1>
+      <p class="subtitle">Корпоративная игра для вашей компании</p>
+    </header>
+
+    <!-- Setup form -->
+    <main id="setup-screen" class="card">
+      <h2>Создать новую игру</h2>
+
+      <div class="field">
+        <label>Количество раундов</label>
+        <div class="rounds-toggle">
+          <button class="round-btn active" data-rounds="2">2 раунда</button>
+          <button class="round-btn" data-rounds="3">3 раунда</button>
+        </div>
+      </div>
+
+      <div id="rounds-section">
+        <!-- Generated dynamically -->
+      </div>
+
+      <div class="field">
+        <label>Игроки <span class="hint">(минимум 2, по одному имени в строку)</span></label>
+        <textarea id="players-input" rows="4" placeholder="Иван&#10;Мария&#10;Алексей&#10;Светлана"></textarea>
+      </div>
+
+      <button id="create-btn" class="btn-primary">Создать комнату</button>
+      <p id="form-error" class="error-msg hidden"></p>
+    </main>
+
+    <!-- Result screen (shown after creation) -->
+    <div id="result-screen" class="card hidden">
+      <div class="room-code-badge">
+        <span class="badge-label">Код комнаты</span>
+        <span id="room-code-display" class="room-code"></span>
+      </div>
+
+      <div class="tv-link-section">
+        <span class="section-label">📺 Экран ТВ</span>
+        <a id="tv-link" href="#" target="_blank" class="link-box"></a>
+        <button class="btn-copy" data-target="tv-link">Скопировать ссылку</button>
+      </div>
+
+      <div class="qr-grid">
+        <div class="qr-card">
+          <h3>Ведущий</h3>
+          <img id="admin-qr" src="" alt="QR для ведущего">
+          <p class="qr-url" id="admin-url"></p>
+          <a id="admin-link" href="#" class="btn-secondary" target="_blank">Открыть панель</a>
+        </div>
+        <div class="qr-card">
+          <h3>Игроки</h3>
+          <img id="player-qr" src="" alt="QR для игроков">
+          <p class="qr-url" id="player-url"></p>
+          <a id="player-link" href="#" class="btn-secondary" target="_blank">Открыть игру</a>
+        </div>
+      </div>
+
+      <button id="new-game-btn" class="btn-outline">Создать новую комнату</button>
+    </div>
+  </div>
+
+  <script src="/js/index.js"></script>
+</body>
+</html>

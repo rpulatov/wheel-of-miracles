@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Поле чудес — Игрок</title>
+  <link rel="stylesheet" href="/css/play.css">
+</head>
+<body>
+
+  <!-- Error screen -->
+  <div id="error-screen" class="screen screen-center hidden">
+    <div class="big-icon">⚠️</div>
+    <h2 id="error-msg">Комната не найдена</h2>
+    <p class="muted">Проверьте ссылку</p>
+    <a href="/" class="btn-outline">На главную</a>
+  </div>
+
+  <!-- Lobby screen -->
+  <div id="screen-lobby" class="screen screen-center">
+    <div class="big-icon">🎡</div>
+    <h1>Поле чудес</h1>
+    <p class="room-code" id="room-code-label"></p>
+    <p class="muted">Ведущий скоро начнёт игру...</p>
+    <div class="connecting-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Main game screen -->
+  <div id="screen-game" class="screen hidden">
+
+    <!-- Turn info bar -->
+    <div id="turn-bar" class="turn-bar">
+      <div class="turn-info">
+        <span class="turn-label">Ход</span>
+        <span id="current-player-display" class="current-player">—</span>
+      </div>
+      <div class="score-info">
+        <span class="score-label">Очки</span>
+        <span id="current-score-display" class="current-score">0</span>
+      </div>
+    </div>
+
+    <!-- Sector result (shown after spin) -->
+    <div id="sector-display" class="sector-display hidden">
+      <span id="sector-text" class="sector-text"></span>
+    </div>
+
+    <!-- Round info -->
+    <div id="round-display" class="round-display">Ожидаем...</div>
+
+    <!-- SPIN button area -->
+    <div id="spin-area" class="spin-area">
+      <button id="spin-btn" class="spin-btn" disabled>
+        <span class="spin-icon">🎡</span>
+        <span class="spin-label">SPIN</span>
+        <span id="tap-count" class="tap-count hidden"></span>
+      </button>
+      <p id="spin-hint" class="spin-hint">Ожидайте своей очереди</p>
+    </div>
+
+    <!-- Guess word button (shown when applicable) -->
+    <button id="guess-btn" class="guess-btn hidden">
+      🎯 Назвать слово целиком
+    </button>
+
+    <!-- Word guess form -->
+    <div id="guess-form" class="guess-form hidden">
+      <p class="guess-form-title">Введите слово или фразу:</p>
+      <input id="guess-input" type="text" class="guess-input"
+        placeholder="ВАШЕ СЛОВО"
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        enterkeyhint="send">
+      <div class="guess-form-actions">
+        <button id="guess-submit" class="btn-primary">Назвать!</button>
+        <button id="guess-cancel" class="btn-outline-small">Отмена</button>
+      </div>
+    </div>
+
+    <!-- Waiting message (shown when it's not your turn) -->
+    <div id="wait-message" class="wait-message hidden"></div>
+
+  </div>
+
+  <!-- Game end screen -->
+  <div id="screen-game-end" class="screen screen-center hidden">
+    <div class="big-icon">🏆</div>
+    <h2>Игра завершена!</h2>
+    <div id="end-scores" class="end-scores"></div>
+    <div id="my-nomination" class="my-nomination hidden"></div>
+    <a href="/" class="btn-outline">Создать новую игру</a>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/play.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поле чудес — ТВ</title>
+  <link rel="stylesheet" href="/css/tv.css">
+</head>
+<body>
+  <!-- Lobby overlay -->
+  <div id="lobby" class="overlay">
+    <div class="overlay-content">
+      <div class="overlay-icon">🎡</div>
+      <h1>Поле чудес</h1>
+      <p id="lobby-room-code" class="overlay-code"></p>
+      <p class="overlay-hint">Ведущий нажмёт «Начать игру»</p>
+    </div>
+  </div>
+
+  <!-- Game over overlay -->
+  <div id="game-end-overlay" class="overlay hidden">
+    <div class="overlay-content game-end-content">
+      <h1 class="game-end-title">🏆 Игра завершена!</h1>
+      <div id="final-scores" class="final-scores"></div>
+      <div id="nominations-list" class="nominations-list"></div>
+    </div>
+  </div>
+
+  <!-- Error overlay -->
+  <div id="error-overlay" class="overlay hidden">
+    <div class="overlay-content">
+      <div class="overlay-icon">⚠️</div>
+      <h2 id="error-msg">Комната не найдена</h2>
+      <p class="overlay-hint">Проверьте ссылку или создайте новую игру на главной странице</p>
+    </div>
+  </div>
+
+  <!-- TV Game screen (16:9) -->
+  <div id="tv-container" class="tv-container hidden">
+
+    <!-- Left: Wheel -->
+    <div class="tv-col-left">
+      <canvas id="wheel-canvas"></canvas>
+    </div>
+
+    <!-- Center: Word grid + player info -->
+    <div class="tv-col-center">
+      <div class="round-info" id="round-info">Раунд 1 из 2</div>
+      <div id="letter-grid" class="letter-grid"></div>
+      <div id="current-player-bar" class="current-player-bar">
+        <span id="current-player-name">Ожидаем старта</span>
+        <span id="current-player-score" class="player-score"></span>
+      </div>
+      <div id="used-letters-bar" class="used-letters-bar"></div>
+    </div>
+
+    <!-- Right: Scoreboard -->
+    <div class="tv-col-right">
+      <div class="scoreboard-title">Счёт</div>
+      <div id="scoreboard" class="scoreboard"></div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/tv.js"></script>
+</body>
+</html>

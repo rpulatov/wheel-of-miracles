@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PUBLIC_URL=http://localhost:3000
+      - PORT=3000
+    restart: unless-stopped
