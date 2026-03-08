@@ -205,19 +205,19 @@ function buildLetterGrid(round) {
   let pos = 0;
 
   words.forEach((word, wi) => {
-    const row = document.createElement('div');
-    row.className = 'word-row';
+    const wordGroup = document.createElement('span');
+    wordGroup.className = 'word-group';
 
     for (let i = 0; i < word.length; i++) {
       const tile = document.createElement('div');
       tile.className = round.revealedMask[pos] ? 'letter-tile revealed-tile' : 'letter-tile hidden-tile';
       tile.dataset.pos = pos;
       if (round.revealedMask[pos]) tile.textContent = word[i];
-      row.appendChild(tile);
+      wordGroup.appendChild(tile);
       pos++;
     }
 
-    grid.appendChild(row);
+    grid.appendChild(wordGroup);
     pos++; // skip space
   });
 }

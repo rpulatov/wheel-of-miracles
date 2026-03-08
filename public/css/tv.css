@@ -84,10 +84,10 @@ html, body {
 }
 
 #wheel-canvas {
-  width: 100%;
-  height: 100%;
   max-width: 100%;
   max-height: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
 }
 
 /* ── Center column ── */
@@ -96,12 +96,13 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2% 2%;
-  gap: 1.5%;
+  padding: 1% 1%;
+  gap: 0.5%;
+  overflow: hidden;
 }
 
 .round-info {
-  font-size: 1.4vw;
+  font-size: 0.9vw;
   font-weight: 700;
   color: var(--gold);
   text-transform: uppercase;
@@ -113,25 +114,25 @@ html, body {
 .letter-grid {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5vw;
+  justify-content: center;
+  gap: 0.6vw;
 }
 
-.word-row {
+.word-group {
   display: flex;
-  gap: 0.35vw;
-  justify-content: center;
+  gap: 0.25vw;
 }
 
 .letter-tile {
-  width: 3.2vw;
-  height: 3.8vw;
-  border-radius: 4px;
+  width: 2.2vw;
+  height: 2.5vw;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.1vw;
+  font-size: 1.3vw;
   font-weight: 900;
   text-transform: uppercase;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -177,24 +178,20 @@ html, body {
 }
 
 #current-player-name {
-  font-size: 1.8vw;
+  font-size: 1.3vw;
   font-weight: 800;
   color: var(--gold);
 }
 
 .player-score {
-  font-size: 1.6vw;
+  font-size: 1.2vw;
   font-weight: 700;
   color: var(--text-muted);
 }
 
 /* Used letters */
 .used-letters-bar {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4vw;
-  min-height: 2.5vw;
+  display: none;
 }
 
 .used-letter-chip {
@@ -216,7 +213,7 @@ html, body {
 }
 
 .scoreboard-title {
-  font-size: 1.2vw;
+  font-size: 1vw;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -227,7 +224,7 @@ html, body {
 .scoreboard {
   display: flex;
   flex-direction: column;
-  gap: 1vw;
+  gap: 0.5vw;
   flex: 1;
 }
 
@@ -235,7 +232,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8vw 1vw;
+  padding: 0.5vw 0.8vw;
   background: var(--card-bg);
   border-radius: 8px;
   border-left: 4px solid transparent;
@@ -249,7 +246,7 @@ html, body {
 }
 
 .score-name {
-  font-size: 1.3vw;
+  font-size: 1vw;
   font-weight: 700;
   color: var(--text);
   flex: 1;
@@ -261,7 +258,7 @@ html, body {
 .score-name.active-player-name { color: var(--gold); }
 
 .score-total {
-  font-size: 1.5vw;
+  font-size: 1.2vw;
   font-weight: 900;
   color: var(--gold-light);
   font-variant-numeric: tabular-nums;
